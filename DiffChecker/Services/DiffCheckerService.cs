@@ -81,7 +81,7 @@ namespace DiffChecker.Services
             var diffPoints = new List<DiffPoint>();
             DiffPoint currentDiffPoint = null;
 
-            Func<bool> diferringChars = () => decodedLeftString[charCounter] != decodedRightString[charCounter];
+            Func<bool> differingChars = () => decodedLeftString[charCounter] != decodedRightString[charCounter];
             Action addDiffPointAsNecessary = () => { if (currentDiffPoint != null) { diffPoints.Add(currentDiffPoint); } };
             Action processDifferingChar = () =>
             {
@@ -107,7 +107,7 @@ namespace DiffChecker.Services
 
             while (charCounter < stringLength)
             {
-                var action = diferringChars() ? processDifferingChar : processSameChar;
+                var action = differingChars() ? processDifferingChar : processSameChar;
                 action();
                 charCounter++;
             }
