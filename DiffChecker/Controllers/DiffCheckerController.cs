@@ -17,8 +17,9 @@ namespace DiffChecker.Controllers
         }
 
         [HttpPut]
+        [HttpPost]
         [Route("{id}/left")]
-        public ActionResult SetLeft(string id, [FromBody] DiffCheckerRequest requestBody)
+        public IActionResult SetLeft(string id, [FromBody] DiffCheckerRequest requestBody)
         {
             var data = requestBody.Data;
 
@@ -29,8 +30,9 @@ namespace DiffChecker.Controllers
         }
 
         [HttpPut]
+        [HttpPost]
         [Route("{id}/right")]
-        public ActionResult SetRight(string id, [FromBody] DiffCheckerRequest requestBody)
+        public IActionResult SetRight(string id, [FromBody] DiffCheckerRequest requestBody)
         {
             var data = requestBody.Data;
 
@@ -42,16 +44,9 @@ namespace DiffChecker.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public ActionResult<ServiceResponse> FindDiff(string id)
+        public IActionResult FindDiff(string id)
         {
-            // try
-            // {
             return Ok(diffCheckerService.FindDifference(id));
-            // }
-            // catch (Exception e)
-            // {
-            //    return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-            // }
         }
     }
 }
