@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using DiffChecker.Model;
 using DiffChecker.Services;
 using DiffChecker.Services.Interfaces;
@@ -12,6 +10,7 @@ namespace DiffCheckerTests.Services
     public class DiffCheckerServiceTests
     {
         private Mock<IRepository> repositoryMock;
+        private Mock<IDecodeService> decodeServiceMock;
         private DiffCheckerService service;
 
         private readonly string TestId = "1";
@@ -20,6 +19,12 @@ namespace DiffCheckerTests.Services
         public void SetUp()
         {
             repositoryMock = new Mock<IRepository>();
+            decodeServiceMock = new Mock<IDecodeService>();
+
+            decodeServiceMock
+                .Setup(ds => ds.DecodeString(It.IsAny<string>()))
+                .Returns<string>(val => val);
+
             service = InstantiateService();
         }
 
@@ -58,6 +63,7 @@ namespace DiffCheckerTests.Services
         {
             var response = SetupDiffTest("abc", "abc");
             Assert.IsTrue(response.Equal);
+            AssertDecodeServiceWasCalled();
         }
 
         [Test]
@@ -65,6 +71,7 @@ namespace DiffCheckerTests.Services
         {
             var response = SetupDiffTest("abc", "ab");
             Assert.IsTrue(response.DifferentSize);
+            AssertDecodeServiceWasCalled();
         }
 
         [Test]
@@ -75,6 +82,7 @@ namespace DiffCheckerTests.Services
             var expectedDiffPoints = new List<DiffPoint> { new DiffPoint { Offset = 2, Length = 1 } };
 
             AssertEqualDiffPoints(expectedDiffPoints, response.DiffPoints);
+            AssertDecodeServiceWasCalled();
         }
 
         [Test]
@@ -85,6 +93,7 @@ namespace DiffCheckerTests.Services
             var expectedDiffPoints = new List<DiffPoint> { new DiffPoint { Offset = 0, Length = 1 } };
 
             AssertEqualDiffPoints(expectedDiffPoints, response.DiffPoints);
+            AssertDecodeServiceWasCalled();
         }
 
         [Test]
@@ -99,6 +108,7 @@ namespace DiffCheckerTests.Services
             };
 
             AssertEqualDiffPoints(expectedDiffPoints, response.DiffPoints);
+            AssertDecodeServiceWasCalled();
         }
 
         [Test]
@@ -112,6 +122,7 @@ namespace DiffCheckerTests.Services
             };
 
             AssertEqualDiffPoints(expectedDiffPoints, response.DiffPoints);
+            AssertDecodeServiceWasCalled();
         }
 
         [Test]
@@ -135,6 +146,7 @@ namespace DiffCheckerTests.Services
             };
 
             AssertEqualDiffPoints(expectedDiffPoints, response.DiffPoints);
+            AssertDecodeServiceWasCalled();
         }
 
         [Test]
@@ -147,17 +159,18 @@ namespace DiffCheckerTests.Services
             };
 
             AssertEqualDiffPoints(expectedDiffPoints, response.DiffPoints);
+            AssertDecodeServiceWasCalled();
         }
 
         private ServiceResponse SetupDiffTest(string plainLeftData, string plainRightData)
         {
             repositoryMock
                 .Setup(r => r.GetLeft(It.IsAny<string>()))
-                .Returns(EncodeData(plainLeftData));
+                .Returns(plainLeftData);
 
             repositoryMock
                 .Setup(r => r.GetRight(It.IsAny<string>()))
-                .Returns(EncodeData(plainRightData));
+                .Returns(plainRightData);
 
             return service.FindDifference(TestId);
         }
@@ -167,11 +180,6 @@ namespace DiffCheckerTests.Services
             var response = SetupDiffTest(plainLeftData, plainRightData);
             Assert.IsFalse(response.Equal);
             return response;
-        }
-
-        private string EncodeData(string plainData)
-        {
-            return Convert.ToBase64String(Encoding.UTF8.GetBytes(plainData));
         }
 
         private void AssertEqualDiffPoints(IList<DiffPoint> expected, IList<DiffPoint> actual)
@@ -188,9 +196,18 @@ namespace DiffCheckerTests.Services
             }
         }
 
+        private void AssertDecodeServiceWasCalled()
+        {
+            decodeServiceMock.Verify(
+                ds => ds.DecodeString(It.IsAny<string>()),
+                Times.Exactly(2));
+        }
+
         private DiffCheckerService InstantiateService()
         {
-            return new DiffCheckerService(repositoryMock.Object);
+            return new DiffCheckerService(
+                repositoryMock.Object,
+                decodeServiceMock.Object);
         }
     }
 }

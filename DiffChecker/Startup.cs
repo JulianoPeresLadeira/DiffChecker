@@ -27,6 +27,7 @@ namespace DiffChecker
                 .AddJsonOptions(options => options.JsonSerializerOptions.IgnoreNullValues = true);
 
             services.AddSingleton<IRepository, TemporaryRepository>();
+            services.AddSingleton<IDecodeService, DecodeService>();
             services.AddScoped<IDiffCheckerService, DiffCheckerService>();
 
             services.AddTransient<IExceptionHandlerMiddleware, ExceptionHandlerMiddleware>();

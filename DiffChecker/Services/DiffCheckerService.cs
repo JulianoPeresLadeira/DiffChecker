@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using DiffChecker.Errors;
 using DiffChecker.Model;
 using DiffChecker.Services.Interfaces;
@@ -10,10 +9,14 @@ namespace DiffChecker.Services
     public class DiffCheckerService : IDiffCheckerService
     {
         private readonly IRepository repository;
+        private readonly IDecodeService decodeService;
 
-        public DiffCheckerService(IRepository repository)
+        public DiffCheckerService(
+            IRepository repository,
+            IDecodeService decodeService)
         {
             this.repository = repository;
+            this.decodeService = decodeService;
         }
 
         public void SetLeft(string id, string data)
@@ -63,14 +66,7 @@ namespace DiffChecker.Services
 
         private string DecodeString(string encodedData)
         {
-            try
-            {
-                return Encoding.UTF8.GetString(Convert.FromBase64String(encodedData));
-            }
-            catch (Exception)
-            {
-                throw new DataDecodingException(encodedData);
-            }
+            return decodeService.DecodeString(encodedData);
         }
 
         private IList<DiffPoint> FindDifferencePoints(string decodedLeftString, string decodedRightString)
