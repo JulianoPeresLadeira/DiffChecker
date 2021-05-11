@@ -9,11 +9,11 @@ namespace DiffChecker.Controllers.v1
     [Route("v1/[controller]")]
     public class DiffController : ControllerBase
     {
-        private IDiffCheckerService diffCheckerService;
+        private IDiffCheckerService _diffCheckerService;
 
         public DiffController(IDiffCheckerService diffCheckerService)
         {
-            this.diffCheckerService = diffCheckerService;
+            _diffCheckerService = diffCheckerService;
         }
 
         [HttpPut]
@@ -25,7 +25,7 @@ namespace DiffChecker.Controllers.v1
 
             if (string.IsNullOrEmpty(data)) throw new InvalidInputException("Missing data field");
 
-            return Ok(diffCheckerService.SetLeft(id, data));
+            return Ok(_diffCheckerService.SetLeft(id, data));
         }
 
         [HttpPut]
@@ -37,14 +37,14 @@ namespace DiffChecker.Controllers.v1
 
             if (string.IsNullOrEmpty(data)) throw new InvalidInputException("Missing data field");
 
-            return Ok(diffCheckerService.SetRight(id, data));
+            return Ok(_diffCheckerService.SetRight(id, data));
         }
 
         [HttpGet]
         [Route("{id}")]
         public ActionResult<DiffResponse> FindDiff(string id)
         {
-            return Ok(diffCheckerService.FindDifference(id));
+            return Ok(_diffCheckerService.FindDifference(id));
         }
     }
 }

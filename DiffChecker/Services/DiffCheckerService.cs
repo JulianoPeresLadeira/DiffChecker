@@ -8,31 +8,31 @@ namespace DiffChecker.Services
 {
     public class DiffCheckerService : IDiffCheckerService
     {
-        private readonly IRepository repository;
-        private readonly IDecodeService decodeService;
+        private readonly IRepository _repository;
+        private readonly IDecodeService _decodeService;
 
         public DiffCheckerService(
             IRepository repository,
             IDecodeService decodeService)
         {
-            this.repository = repository;
-            this.decodeService = decodeService;
+            _repository = repository;
+            _decodeService = decodeService;
         }
 
         public DiffData SetLeft(string id, string data)
         {
-            return repository.SetLeft(id, data);
+            return _repository.SetLeft(id, data);
         }
 
         public DiffData SetRight(string id, string data)
         {
-            return repository.SetRight(id, data);
+            return _repository.SetRight(id, data);
         }
 
         public DiffResponse FindDifference(string id)
         {
-            var encodedLeft = repository.GetLeft(id).Data;
-            var encodedRight = repository.GetRight(id).Data;
+            var encodedLeft = _repository.GetLeft(id).Data;
+            var encodedRight = _repository.GetRight(id).Data;
 
             if (string.IsNullOrEmpty(encodedLeft)) throw new MissingInputException($"Left content for {id} is not valid");
             if (string.IsNullOrEmpty(encodedRight)) throw new MissingInputException($"Right content for {id} is not valid");
@@ -66,7 +66,7 @@ namespace DiffChecker.Services
 
         private string DecodeString(string encodedData)
         {
-            return decodeService.DecodeString(encodedData);
+            return _decodeService.DecodeString(encodedData);
         }
 
         private IList<DiffPoint> FindDifferencePoints(string decodedLeftString, string decodedRightString)

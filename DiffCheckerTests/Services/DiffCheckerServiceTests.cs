@@ -9,32 +9,32 @@ namespace DiffCheckerTests.Services
 {
     public class DiffCheckerServiceTests
     {
-        private Mock<IRepository> repositoryMock;
-        private Mock<IDecodeService> decodeServiceMock;
-        private DiffCheckerService service;
+        private Mock<IRepository> _repositoryMock;
+        private Mock<IDecodeService> _decodeServiceMock;
+        private DiffCheckerService _service;
 
         private readonly string TestId = "1";
 
         [SetUp]
         public void SetUp()
         {
-            repositoryMock = new Mock<IRepository>();
-            decodeServiceMock = new Mock<IDecodeService>();
+            _repositoryMock = new Mock<IRepository>();
+            _decodeServiceMock = new Mock<IDecodeService>();
 
-            decodeServiceMock
+            _decodeServiceMock
                 .Setup(ds => ds.DecodeString(It.IsAny<string>()))
                 .Returns<string>(val => val);
 
-            service = InstantiateService();
+            _service = InstantiateService();
         }
 
         [Test]
         public void SetLeftCallsRepository()
         {
             var testData = "123";
-            service.SetLeft(TestId, testData);
+            _service.SetLeft(TestId, testData);
 
-            repositoryMock.Verify(
+            _repositoryMock.Verify(
                 r => r.SetLeft(
                     It.Is<string>(id => id.Equals(TestId)),
                     It.Is<string>(data => data.Equals(testData))
@@ -47,9 +47,9 @@ namespace DiffCheckerTests.Services
         public void SetRightCallsRepository()
         {
             var testData = "123";
-            service.SetRight(TestId, testData);
+            _service.SetRight(TestId, testData);
 
-            repositoryMock.Verify(
+            _repositoryMock.Verify(
                 r => r.SetRight(
                     It.Is<string>(id => id.Equals(TestId)),
                     It.Is<string>(data => data.Equals(testData))
@@ -164,15 +164,15 @@ namespace DiffCheckerTests.Services
 
         private DiffResponse SetupDiffTest(string plainLeftData, string plainRightData)
         {
-            repositoryMock
+            _repositoryMock
                 .Setup(r => r.GetLeft(It.IsAny<string>()))
                 .Returns(new DiffData { Data = plainLeftData });
 
-            repositoryMock
+            _repositoryMock
                 .Setup(r => r.GetRight(It.IsAny<string>()))
                 .Returns(new DiffData { Data = plainRightData });
 
-            return service.FindDifference(TestId);
+            return _service.FindDifference(TestId);
         }
 
         private DiffResponse SetupDifferentDiffTest(string plainLeftData, string plainRightData)
@@ -198,7 +198,7 @@ namespace DiffCheckerTests.Services
 
         private void AssertDecodeServiceWasCalled()
         {
-            decodeServiceMock.Verify(
+            _decodeServiceMock.Verify(
                 ds => ds.DecodeString(It.IsAny<string>()),
                 Times.Exactly(2));
         }
@@ -206,8 +206,8 @@ namespace DiffCheckerTests.Services
         private DiffCheckerService InstantiateService()
         {
             return new DiffCheckerService(
-                repositoryMock.Object,
-                decodeServiceMock.Object);
+                _repositoryMock.Object,
+                _decodeServiceMock.Object);
         }
     }
 }

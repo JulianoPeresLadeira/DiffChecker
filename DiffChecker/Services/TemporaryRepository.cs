@@ -6,13 +6,13 @@ namespace DiffChecker.Services
 {
     public class TemporaryRepository : IRepository
     {
-        private readonly Dictionary<string, string> LeftMap = new Dictionary<string, string>();
-        private readonly Dictionary<string, string> RightMap = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _leftMap = new Dictionary<string, string>();
+        private readonly Dictionary<string, string> _rightMap = new Dictionary<string, string>();
 
         public DiffData GetLeft(string id)
         {
             string data;
-            LeftMap.TryGetValue(id, out data);
+            _leftMap.TryGetValue(id, out data);
             return new DiffData
             {
                 Id = id,
@@ -23,7 +23,7 @@ namespace DiffChecker.Services
         public DiffData GetRight(string id)
         {
             string data;
-            RightMap.TryGetValue(id, out data);
+            _rightMap.TryGetValue(id, out data);
             return new DiffData
             {
                 Id = id,
@@ -33,21 +33,21 @@ namespace DiffChecker.Services
 
         public DiffData SetLeft(string id, string data)
         {
-            LeftMap[id] = data;
+            _leftMap[id] = data;
             return new DiffData
             {
                 Id = id,
-                Data = LeftMap[id]
+                Data = _leftMap[id]
             };
         }
 
         public DiffData SetRight(string id, string data)
         {
-            RightMap[id] = data;
+            _rightMap[id] = data;
             return new DiffData
             {
                 Id = id,
-                Data = RightMap[id]
+                Data = _rightMap[id]
             };
         }
     }
