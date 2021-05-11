@@ -29,7 +29,6 @@ namespace DiffChecker
             services.AddSingleton<IRepository, TemporaryRepository>();
             services.AddSingleton<IDecodeService, DecodeService>();
             services.AddScoped<IDiffCheckerService, DiffCheckerService>();
-
             services.AddTransient<IExceptionHandlerMiddleware, ExceptionHandlerMiddleware>();
         }
 
@@ -40,6 +39,7 @@ namespace DiffChecker
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseMiddleware<IExceptionHandlerMiddleware>();
 
             app.UseHttpsRedirection();

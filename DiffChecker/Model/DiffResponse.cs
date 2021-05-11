@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace DiffChecker.Model
 {
     [Serializable]
-    public class ServiceResponse
+    public class DiffResponse
     {
         public Nullable<bool> Equal { get; set; }
         public Nullable<bool> DifferentSize { get; set; }

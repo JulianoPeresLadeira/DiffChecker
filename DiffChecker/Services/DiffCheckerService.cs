@@ -19,20 +19,20 @@ namespace DiffChecker.Services
             this.decodeService = decodeService;
         }
 
-        public void SetLeft(string id, string data)
+        public DiffData SetLeft(string id, string data)
         {
-            repository.SetLeft(id, data);
+            return repository.SetLeft(id, data);
         }
 
-        public void SetRight(string id, string data)
+        public DiffData SetRight(string id, string data)
         {
-            repository.SetRight(id, data);
+            return repository.SetRight(id, data);
         }
 
-        public ServiceResponse FindDifference(string id)
+        public DiffResponse FindDifference(string id)
         {
-            var encodedLeft = repository.GetLeft(id);
-            var encodedRight = repository.GetRight(id);
+            var encodedLeft = repository.GetLeft(id).Data;
+            var encodedRight = repository.GetRight(id).Data;
 
             if (string.IsNullOrEmpty(encodedLeft)) throw new MissingInputException($"Left content for {id} is not valid");
             if (string.IsNullOrEmpty(encodedRight)) throw new MissingInputException($"Right content for {id} is not valid");
@@ -42,7 +42,7 @@ namespace DiffChecker.Services
 
             if (left.Length != right.Length)
             {
-                return new ServiceResponse
+                return new DiffResponse
                 {
                     DifferentSize = true
                 };
@@ -50,14 +50,14 @@ namespace DiffChecker.Services
 
             if (left == right)
             {
-                return new ServiceResponse
+                return new DiffResponse
                 {
                     Equal = true
                 };
             }
 
             var diffPoints = FindDifferencePoints(left, right);
-            return new ServiceResponse
+            return new DiffResponse
             {
                 Equal = false,
                 DiffPoints = diffPoints

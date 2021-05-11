@@ -3,15 +3,15 @@ using DiffChecker.Model;
 using DiffChecker.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DiffChecker.Controllers
+namespace DiffChecker.Controllers.v1
 {
     [ApiController]
-    [Route("v1/diff")]
-    public class DiffCheckerController : ControllerBase
+    [Route("v1/[controller]")]
+    public class DiffController : ControllerBase
     {
         private IDiffCheckerService diffCheckerService;
 
-        public DiffCheckerController(IDiffCheckerService diffCheckerService)
+        public DiffController(IDiffCheckerService diffCheckerService)
         {
             this.diffCheckerService = diffCheckerService;
         }
@@ -19,32 +19,30 @@ namespace DiffChecker.Controllers
         [HttpPut]
         [HttpPost]
         [Route("{id}/left")]
-        public IActionResult SetLeft(string id, [FromBody] DiffCheckerRequest requestBody)
+        public ActionResult<DiffData> SetLeft(string id, [FromBody] DiffCheckerRequest requestBody)
         {
             var data = requestBody.Data;
 
             if (string.IsNullOrEmpty(data)) throw new InvalidInputException("Missing data field");
 
-            diffCheckerService.SetLeft(id, data);
-            return Ok($"Left data set correctly for id {id}");
+            return Ok(diffCheckerService.SetLeft(id, data));
         }
 
         [HttpPut]
         [HttpPost]
         [Route("{id}/right")]
-        public IActionResult SetRight(string id, [FromBody] DiffCheckerRequest requestBody)
+        public ActionResult<DiffData> SetRight(string id, [FromBody] DiffCheckerRequest requestBody)
         {
             var data = requestBody.Data;
 
             if (string.IsNullOrEmpty(data)) throw new InvalidInputException("Missing data field");
 
-            diffCheckerService.SetRight(id, data);
-            return Ok($"Right data set correctly for id {id}");
+            return Ok(diffCheckerService.SetRight(id, data));
         }
 
         [HttpGet]
         [Route("{id}")]
-        public IActionResult FindDiff(string id)
+        public ActionResult<DiffResponse> FindDiff(string id)
         {
             return Ok(diffCheckerService.FindDifference(id));
         }

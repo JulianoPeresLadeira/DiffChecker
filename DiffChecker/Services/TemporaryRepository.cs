@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DiffChecker.Model;
 using DiffChecker.Services.Interfaces;
 
 namespace DiffChecker.Services
@@ -8,28 +9,46 @@ namespace DiffChecker.Services
         private readonly Dictionary<string, string> LeftMap = new Dictionary<string, string>();
         private readonly Dictionary<string, string> RightMap = new Dictionary<string, string>();
 
-        public string GetLeft(string id)
+        public DiffData GetLeft(string id)
         {
             string data;
             LeftMap.TryGetValue(id, out data);
-            return data;
+            return new DiffData
+            {
+                Id = id,
+                Data = data
+            };
         }
 
-        public string GetRight(string id)
+        public DiffData GetRight(string id)
         {
             string data;
             RightMap.TryGetValue(id, out data);
-            return data;
+            return new DiffData
+            {
+                Id = id,
+                Data = data
+            };
         }
 
-        public void SetLeft(string id, string data)
+        public DiffData SetLeft(string id, string data)
         {
             LeftMap[id] = data;
+            return new DiffData
+            {
+                Id = id,
+                Data = LeftMap[id]
+            };
         }
 
-        public void SetRight(string id, string data)
+        public DiffData SetRight(string id, string data)
         {
             RightMap[id] = data;
+            return new DiffData
+            {
+                Id = id,
+                Data = RightMap[id]
+            };
         }
     }
 }

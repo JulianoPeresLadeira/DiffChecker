@@ -25,7 +25,7 @@ namespace DiffCheckerTests.Services
             repository.SetLeft(testId, testData);
 
             var fetchedData = repository.GetLeft(testId);
-            Assert.AreEqual(testData, fetchedData);
+            Assert.AreEqual(testData, fetchedData.Data);
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace DiffCheckerTests.Services
             repository.SetRight(testId, testData);
 
             var fetchedData = repository.GetRight(testId);
-            Assert.AreEqual(testData, fetchedData);
+            Assert.AreEqual(testData, fetchedData.Data);
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace DiffCheckerTests.Services
             repository.SetLeft(testId, testData);
 
             var fetchedData = repository.GetLeft(altTestId);
-            Assert.IsNull(fetchedData);
+            Assert.IsNull(fetchedData.Data);
         }
 
         [Test]
@@ -52,21 +52,21 @@ namespace DiffCheckerTests.Services
             repository.SetRight(testId, testData);
 
             var fetchedData = repository.GetRight(altTestId);
-            Assert.IsNull(fetchedData);
+            Assert.IsNull(fetchedData.Data);
         }
 
         [Test]
         public void NoIdSetLeft()
         {
             var data = repository.GetLeft(testId);
-            Assert.IsNull(data);
+            Assert.IsNull(data.Data);
         }
 
         [Test]
         public void NoIdSetRight()
         {
             var data = repository.GetRight(testId);
-            Assert.IsNull(data);
+            Assert.IsNull(data.Data);
         }
     }
 }
