@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiffChecker", "DiffChecker\DiffChecker.csproj", "{60F9237D-A239-4267-A987-2D5A940D6210}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiffCheckerTests", "DiffCheckerTests\DiffCheckerTests.csproj", "{AA3094B9-81AC-4EC7-A105-521FDEC2739B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiffChecker.UnitTests", "DiffChecker.UnitTests\DiffChecker.UnitTests.csproj", "{AA3094B9-81AC-4EC7-A105-521FDEC2739B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiffChecker.IntegrationTests", "DiffChecker.IntegrationTests\DiffChecker.IntegrationTests.csproj", "{A061566F-8BCA-4CD7-934C-193AD76C0BFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{AA3094B9-81AC-4EC7-A105-521FDEC2739B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA3094B9-81AC-4EC7-A105-521FDEC2739B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA3094B9-81AC-4EC7-A105-521FDEC2739B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A061566F-8BCA-4CD7-934C-193AD76C0BFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A061566F-8BCA-4CD7-934C-193AD76C0BFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A061566F-8BCA-4CD7-934C-193AD76C0BFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A061566F-8BCA-4CD7-934C-193AD76C0BFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
