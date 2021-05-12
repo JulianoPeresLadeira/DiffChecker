@@ -1,10 +1,10 @@
+using DiffChecker.Api.Middleware;
+using DiffChecker.Api.Middleware.Interfaces;
+using DiffChecker.Api.Services;
+using DiffChecker.Api.Services.Interfaces;
 using DiffChecker.DataAccess.Service;
 using DiffChecker.Domain.Model;
 using DiffChecker.Domain.Services;
-using DiffChecker.Middleware;
-using DiffChecker.Middleware.Interfaces;
-using DiffChecker.Services;
-using DiffChecker.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -13,7 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
-namespace DiffChecker
+namespace DiffChecker.Api
 {
     public class Startup
     {
@@ -43,7 +43,7 @@ namespace DiffChecker
                         Email = "julianoladeira@gmail.com"
                     },
                 });
-                c.IncludeXmlComments(GetXmlCommentsFile(Configuration));
+                c.IncludeXmlComments(GetXmlCommentsFile());
             });
 
             // services.AddSingleton<IRepository, TemporaryRepository>();
@@ -89,7 +89,7 @@ namespace DiffChecker
             });
         }
 
-        private string GetXmlCommentsFile(IConfiguration configuration)
+        private string GetXmlCommentsFile()
         {
             return Configuration.GetSection("SwaggerConfiguration").GetValue<string>("XmlCommentsFile");
         }

@@ -4,7 +4,7 @@
         <name>DiffChecker.Api</name>
     </assembly>
     <members>
-        <member name="M:DiffChecker.Api.Controllers.v1.DiffController.SetLeft(System.String,DiffChecker.Api.Model.SetDataRequest)">
+        <member name="M:DiffChecker.Controllers.v1.DiffController.SetLeft(System.String,DiffChecker.Model.SetDataRequest)">
              <summary>
              Sets left data for comparison
              </summary>
@@ -22,7 +22,7 @@
              <response code="200">Data set correctly</response>
              <response code="400">Missing data, nothing set</response>
         </member>
-        <member name="M:DiffChecker.Api.Controllers.v1.DiffController.SetRight(System.String,DiffChecker.Api.Model.SetDataRequest)">
+        <member name="M:DiffChecker.Controllers.v1.DiffController.SetRight(System.String,DiffChecker.Model.SetDataRequest)">
              <summary>
              Sets right data for comparison
              </summary>
@@ -40,7 +40,7 @@
              <response code="200">Data set correctly</response>
              <response code="400">Missing data, nothing set</response>
         </member>
-        <member name="M:DiffChecker.Api.Controllers.v1.DiffController.FindDiff(System.String)">
+        <member name="M:DiffChecker.Controllers.v1.DiffController.FindDiff(System.String)">
             <summary>
             Performs the comparison with the data set at the id
             </summary>

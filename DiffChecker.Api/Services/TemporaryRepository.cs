@@ -2,7 +2,7 @@
 using DiffChecker.Domain.Model;
 using DiffChecker.Domain.Services;
 
-namespace DiffChecker.Services
+namespace DiffChecker.Api.Services
 {
     public class TemporaryRepository : IRepository
     {

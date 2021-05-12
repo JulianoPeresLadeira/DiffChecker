@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
+using DiffChecker.Api.Model;
+using DiffChecker.Api.Services;
+using DiffChecker.Api.Services.Interfaces;
 using DiffChecker.Domain.Error;
 using DiffChecker.Domain.Model;
 using DiffChecker.Domain.Services;
-using DiffChecker.Model;
-using DiffChecker.Services;
-using DiffChecker.Services.Interfaces;
 using Moq;
 using NUnit.Framework;
 

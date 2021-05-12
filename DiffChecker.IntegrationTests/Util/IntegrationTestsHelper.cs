@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 using System.Text;
-using DiffChecker.Model;
+using DiffChecker.Api.Model;
 using Newtonsoft.Json;
 
 namespace DiffChecker.IntegrationTests.Util

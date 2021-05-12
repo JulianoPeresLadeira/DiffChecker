@@ -1,5 +1,5 @@
-﻿using DiffChecker.Domain.Services;
-using DiffChecker.Services;
+﻿using DiffChecker.Api.Services;
+using DiffChecker.Domain.Services;
 
 namespace DiffChecker.UnitTests.Services
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DiffChecker.Model
+namespace DiffChecker.Api.Model
 {
     [Serializable]
     public class DiffPoint

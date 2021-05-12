@@ -1,7 +1,7 @@
-﻿using DiffChecker.Domain.Model;
-using DiffChecker.Model;
+﻿using DiffChecker.Api.Model;
+using DiffChecker.Domain.Model;
 
-namespace DiffChecker.Services.Interfaces
+namespace DiffChecker.Api.Services.Interfaces
 {
     public interface IDiffCheckerService
     {

@@ -1,7 +1,8 @@
-﻿using DiffChecker.Controllers.v1;
+﻿using DiffChecker.Api.Controllers.v1;
+using DiffChecker.Api.Model;
+using DiffChecker.Api.Services.Interfaces;
 using DiffChecker.Domain.Error;
-using DiffChecker.Model;
-using DiffChecker.Services.Interfaces;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 

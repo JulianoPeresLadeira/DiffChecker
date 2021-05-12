@@ -1,5 +1,5 @@
-﻿using DiffChecker.Domain.Error;
-using DiffChecker.Services;
+﻿using DiffChecker.Api.Services;
+using DiffChecker.Domain.Error;
 using NUnit.Framework;
 
 namespace DiffChecker.UnitTests.Services

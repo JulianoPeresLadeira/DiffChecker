@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
+using DiffChecker.Api.Middleware.Interfaces;
 using DiffChecker.Domain.Error;
 using DiffChecker.Domain.Model;
-using DiffChecker.Middleware.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace DiffChecker.Middleware
+namespace DiffChecker.Api.Middleware
 {
     public class ExceptionHandlerMiddleware : IExceptionHandlerMiddleware
     {

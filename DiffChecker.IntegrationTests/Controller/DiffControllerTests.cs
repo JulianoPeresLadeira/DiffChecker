@@ -2,10 +2,10 @@
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using DiffChecker.Api.Model;
 using DiffChecker.DataAccess.Model;
 using DiffChecker.Domain.Model;
 using DiffChecker.IntegrationTests.Util;
-using DiffChecker.Model;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
@@ -14,10 +14,10 @@ using Xunit;
 
 namespace DiffChecker.IntegrationTests.Controller
 {
-    public class DiffControllerTests : IClassFixture<WebApplicationFactory<DiffChecker.Startup>>, IDisposable
+    public class DiffControllerTests : IClassFixture<WebApplicationFactory<Api.Startup>>, IDisposable
     {
         private readonly HttpClient _client;
-        private readonly WebApplicationFactory<DiffChecker.Startup> _factory;
+        private readonly WebApplicationFactory<Api.Startup> _factory;
 
         private readonly string TestId = "10000";
 
@@ -25,7 +25,7 @@ namespace DiffChecker.IntegrationTests.Controller
         private readonly string TestString2_10Chars = "MDEyMzQ1NjQ1Ng==";
         private readonly string TestString_9Chars = "MDEyMzQ1Njc4";
 
-        public DiffControllerTests(WebApplicationFactory<DiffChecker.Startup> factory)
+        public DiffControllerTests(WebApplicationFactory<Api.Startup> factory)
         {
             var configPath = GetConfigFile();
 

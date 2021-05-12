@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using DiffChecker.Api.Model;
+using DiffChecker.Api.Services.Interfaces;
 using DiffChecker.Domain.Error;
 using DiffChecker.Domain.Model;
 using DiffChecker.Domain.Services;
-using DiffChecker.Model;
-using DiffChecker.Services.Interfaces;
 
-namespace DiffChecker.Services
+namespace DiffChecker.Api.Services
 {
     public class DiffCheckerService : IDiffCheckerService
     {

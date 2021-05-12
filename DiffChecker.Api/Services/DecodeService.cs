@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text;
+using DiffChecker.Api.Services.Interfaces;
 using DiffChecker.Domain.Error;
-using DiffChecker.Services.Interfaces;
 
-namespace DiffChecker.Services
+namespace DiffChecker.Api.Services
 {
     public class DecodeService : IDecodeService
     {

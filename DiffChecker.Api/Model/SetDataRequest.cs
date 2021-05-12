@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DiffChecker.Model
+namespace DiffChecker.Api.Model
 {
     [Serializable]
     public class SetDataRequest

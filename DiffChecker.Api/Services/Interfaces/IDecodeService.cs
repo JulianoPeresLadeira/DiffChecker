@@ -1,4 +1,4 @@
-﻿namespace DiffChecker.Services.Interfaces
+﻿namespace DiffChecker.Api.Services.Interfaces
 {
     public interface IDecodeService
     {

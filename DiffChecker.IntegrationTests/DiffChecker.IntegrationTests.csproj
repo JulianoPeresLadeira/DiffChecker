@@ -22,6 +22,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\DiffChecker.Api\DiffChecker.Api.csproj" />
 	  <ProjectReference Include="..\DiffChecker.Domain\DiffChecker.Domain.csproj" />
 	  <ProjectReference Include="..\DiffChecker\DiffChecker.Api.csproj" />
 	</ItemGroup>
@@ -33,6 +34,6 @@
 	</ItemGroup>
 
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-	  <Exec Command="xcopy /y &quot;$(ProjectDir)$(OutDir)..\..\..\..\DiffChecker/DiffChecker.xml&quot;" />
+	  <Exec Command="xcopy /y &quot;$(ProjectDir)$(OutDir)..\..\..\..\DiffChecker.Api\DiffChecker.xml&quot;" />
 	</Target>
 </Project>

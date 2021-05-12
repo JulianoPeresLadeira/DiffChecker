@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DiffChecker.Model
+namespace DiffChecker.Api.Model
 {
     [Serializable]
     public class ComparisonResponse

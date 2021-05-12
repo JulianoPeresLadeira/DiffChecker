@@ -1,12 +1,12 @@
 ﻿using System.Net;
+using DiffChecker.Api.Model;
+using DiffChecker.Api.Services.Interfaces;
 using DiffChecker.Domain.Error;
 using DiffChecker.Domain.Model;
-using DiffChecker.Model;
-using DiffChecker.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace DiffChecker.Controllers.v1
+namespace DiffChecker.Api.Controllers.v1
 {
     [ApiController]
     [Route("v1/[controller]")]
@@ -15,7 +15,8 @@ namespace DiffChecker.Controllers.v1
     {
         private IDiffCheckerService _diffCheckerService;
 
-        public DiffController(IDiffCheckerService diffCheckerService)
+        public DiffController(
+            IDiffCheckerService diffCheckerService)
         {
             _diffCheckerService = diffCheckerService;
         }
