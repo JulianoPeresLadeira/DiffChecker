@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiffChecker", "DiffChecker\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiffChecker.UnitTests", "DiffChecker.UnitTests\DiffChecker.UnitTests.csproj", "{AA3094B9-81AC-4EC7-A105-521FDEC2739B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiffChecker.IntegrationTests", "DiffChecker.IntegrationTests\DiffChecker.IntegrationTests.csproj", "{A061566F-8BCA-4CD7-934C-193AD76C0BFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiffChecker.IntegrationTests", "DiffChecker.IntegrationTests\DiffChecker.IntegrationTests.csproj", "{A061566F-8BCA-4CD7-934C-193AD76C0BFF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3ED17A23-80E2-419F-9F76-B6F37BB9AD79}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

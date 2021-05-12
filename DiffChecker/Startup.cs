@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace DiffChecker
 {
@@ -19,12 +20,27 @@ namespace DiffChecker
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services
                 .AddControllers()
                 .AddJsonOptions(options => options.JsonSerializerOptions.IgnoreNullValues = true);
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Diff Checker",
+                    Version = "v1",
+                    Description = "Compares two different base64 encoded strings, returning diff points and the length of diff, of if they have different sizes.",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Juliano Ladeira",
+                        Email = "julianoladeira@gmail.com"
+                    },
+                });
+                c.IncludeXmlComments(@"DiffChecker.xml");
+            });
 
             services.AddSingleton<IRepository, TemporaryRepository>();
             services.AddSingleton<IDecodeService, DecodeService>();
@@ -32,13 +48,20 @@ namespace DiffChecker
             services.AddTransient<IExceptionHandlerMiddleware, ExceptionHandlerMiddleware>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Diff Checker");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseMiddleware<IExceptionHandlerMiddleware>();
 

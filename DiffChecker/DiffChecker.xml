@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DiffChecker</name>
+    </assembly>
+    <members>
+        <member name="M:DiffChecker.Controllers.v1.DiffController.SetLeft(System.String,DiffChecker.Model.SetDataRequest)">
+             <summary>
+             Sets left data for comparison
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 {
+                    "data": "VGVzdA==",
+                 }
+            
+             </remarks>
+             <param name="id">The key whose left is to be set</param>
+             <param name="requestBody">Json with string information</param>
+             <returns>The newly created record</returns>
+             <response code="200">Data set correctly</response>
+             <response code="400">Missing data, nothing set</response>
+        </member>
+        <member name="M:DiffChecker.Controllers.v1.DiffController.SetRight(System.String,DiffChecker.Model.SetDataRequest)">
+             <summary>
+             Sets right data for comparison
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 {
+                    "data": "VGVzdA==",
+                 }
+            
+             </remarks>
+             <param name="id">The key whose right is to be set</param>
+             <param name="requestBody">Json with string information</param>
+             <returns>The newly created record</returns>
+             <response code="200">Data set correctly</response>
+             <response code="400">Missing data, nothing set</response>
+        </member>
+        <member name="M:DiffChecker.Controllers.v1.DiffController.FindDiff(System.String)">
+            <summary>
+            Performs the comparison with the data set at the id
+            </summary>
+            <remarks>
+            </remarks>
+            <param name="id">The key whose data is to be compared</param>
+            <returns>The comparison performed or the error encountered.</returns>
+            <response code="200">Comparison done correctly</response>
+            <response code="400">Missing Data for comparison</response>
+            <response code="500">Error performing comparison, such as error decoding the base64 string</response>
+        </member>
+    </members>
+</doc>

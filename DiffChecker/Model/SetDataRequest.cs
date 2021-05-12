@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace DiffChecker.Model
 {
     [Serializable]
-    public class DiffCheckerRequest
+    public class SetDataRequest
     {
+        [Required]
         public string Data { get; set; }
     }
 }

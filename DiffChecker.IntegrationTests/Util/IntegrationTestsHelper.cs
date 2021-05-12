@@ -25,7 +25,7 @@ namespace DiffChecker.IntegrationTests.Util
         public static HttpContent BuildSetDataRequest(string data)
         {
             return new StringContent(
-                JsonConvert.SerializeObject(new DiffCheckerRequest { Data = data }),
+                JsonConvert.SerializeObject(new SetDataRequest { Data = data }),
                 Encoding.UTF8,
                 "application/json");
         }

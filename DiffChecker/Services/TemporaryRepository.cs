@@ -9,42 +9,42 @@ namespace DiffChecker.Services
         private readonly Dictionary<string, string> _leftMap = new Dictionary<string, string>();
         private readonly Dictionary<string, string> _rightMap = new Dictionary<string, string>();
 
-        public DiffData GetLeft(string id)
+        public SetDataResponse GetLeft(string id)
         {
             string data;
             _leftMap.TryGetValue(id, out data);
-            return new DiffData
+            return new SetDataResponse
             {
                 Id = id,
                 Data = data
             };
         }
 
-        public DiffData GetRight(string id)
+        public SetDataResponse GetRight(string id)
         {
             string data;
             _rightMap.TryGetValue(id, out data);
-            return new DiffData
+            return new SetDataResponse
             {
                 Id = id,
                 Data = data
             };
         }
 
-        public DiffData SetLeft(string id, string data)
+        public SetDataResponse SetLeft(string id, string data)
         {
             _leftMap[id] = data;
-            return new DiffData
+            return new SetDataResponse
             {
                 Id = id,
                 Data = _leftMap[id]
             };
         }
 
-        public DiffData SetRight(string id, string data)
+        public SetDataResponse SetRight(string id, string data)
         {
             _rightMap[id] = data;
-            return new DiffData
+            return new SetDataResponse
             {
                 Id = id,
                 Data = _rightMap[id]

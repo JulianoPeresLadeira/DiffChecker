@@ -19,17 +19,17 @@ namespace DiffChecker.Services
             _decodeService = decodeService;
         }
 
-        public DiffData SetLeft(string id, string data)
+        public SetDataResponse SetLeft(string id, string data)
         {
             return _repository.SetLeft(id, data);
         }
 
-        public DiffData SetRight(string id, string data)
+        public SetDataResponse SetRight(string id, string data)
         {
             return _repository.SetRight(id, data);
         }
 
-        public DiffResponse FindDifference(string id)
+        public ComparisonResponse FindDifference(string id)
         {
             var encodedLeft = _repository.GetLeft(id).Data;
             var encodedRight = _repository.GetRight(id).Data;
@@ -42,7 +42,7 @@ namespace DiffChecker.Services
 
             if (left.Length != right.Length)
             {
-                return new DiffResponse
+                return new ComparisonResponse
                 {
                     DifferentSize = true
                 };
@@ -50,14 +50,14 @@ namespace DiffChecker.Services
 
             if (left == right)
             {
-                return new DiffResponse
+                return new ComparisonResponse
                 {
                     Equal = true
                 };
             }
 
             var diffPoints = FindDifferencePoints(left, right);
-            return new DiffResponse
+            return new ComparisonResponse
             {
                 Equal = false,
                 DiffPoints = diffPoints

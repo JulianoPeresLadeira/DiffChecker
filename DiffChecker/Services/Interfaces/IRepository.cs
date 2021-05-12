@@ -4,12 +4,12 @@ namespace DiffChecker.Services.Interfaces
 {
     public interface IRepository
     {
-        DiffData SetRight(string id, string data);
+        SetDataResponse SetRight(string id, string data);
 
-        DiffData GetRight(string id);
+        SetDataResponse GetRight(string id);
 
-        DiffData SetLeft(string id, string data);
+        SetDataResponse SetLeft(string id, string data);
 
-        DiffData GetLeft(string id);
+        SetDataResponse GetLeft(string id);
     }
 }

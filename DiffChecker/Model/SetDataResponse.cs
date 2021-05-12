@@ -3,7 +3,7 @@
 namespace DiffChecker.Model
 {
     [Serializable]
-    public class DiffData
+    public class SetDataResponse
     {
         public string Id { get; set; }
         public string Data { get; set; }

@@ -54,7 +54,7 @@ namespace DiffChecker.IntegrationTests.Controller
             Assert.Equal(500, errorResponse.StatusCode);
         }
 
-        private async Task<DiffResponse> EndToEndTest(string id, string leftData, string rightData)
+        private async Task<ComparisonResponse> EndToEndTest(string id, string leftData, string rightData)
         {
             await SetupData(id, leftData, rightData);
             return await CallDiff(id);
@@ -79,18 +79,18 @@ namespace DiffChecker.IntegrationTests.Controller
             Assert.Equal(id, rightResponse.Id);
         }
 
-        private async Task<DiffData> CallSetData(string url, string data)
+        private async Task<SetDataResponse> CallSetData(string url, string data)
         {
             var requestBody = IntegrationTestsHelper.BuildSetDataRequest(data);
 
             var response = await _client.PostAsync(url, requestBody);
-            return JsonConvert.DeserializeObject<DiffData>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<SetDataResponse>(await response.Content.ReadAsStringAsync());
         }
 
-        private async Task<DiffResponse> CallDiff(string id)
+        private async Task<ComparisonResponse> CallDiff(string id)
         {
             var diffResponse = await _client.GetAsync(IntegrationTestsHelper.GetDiffUrl(id));
-            return JsonConvert.DeserializeObject<DiffResponse>(await diffResponse.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<ComparisonResponse>(await diffResponse.Content.ReadAsStringAsync());
         }
     }
 }

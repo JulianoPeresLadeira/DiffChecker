@@ -4,10 +4,10 @@ namespace DiffChecker.Services.Interfaces
 {
     public interface IDiffCheckerService
     {
-        DiffResponse FindDifference(string id);
+        ComparisonResponse FindDifference(string id);
 
-        DiffData SetLeft(string id, string data);
+        SetDataResponse SetLeft(string id, string data);
 
-        DiffData SetRight(string id, string data);
+        SetDataResponse SetRight(string id, string data);
     }
 }

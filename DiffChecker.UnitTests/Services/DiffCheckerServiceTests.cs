@@ -162,20 +162,20 @@ namespace DiffCheckerTests.Services
             AssertDecodeServiceWasCalled();
         }
 
-        private DiffResponse SetupDiffTest(string plainLeftData, string plainRightData)
+        private ComparisonResponse SetupDiffTest(string plainLeftData, string plainRightData)
         {
             _repositoryMock
                 .Setup(r => r.GetLeft(It.IsAny<string>()))
-                .Returns(new DiffData { Data = plainLeftData });
+                .Returns(new SetDataResponse { Data = plainLeftData });
 
             _repositoryMock
                 .Setup(r => r.GetRight(It.IsAny<string>()))
-                .Returns(new DiffData { Data = plainRightData });
+                .Returns(new SetDataResponse { Data = plainRightData });
 
             return _service.FindDifference(TestId);
         }
 
-        private DiffResponse SetupDifferentDiffTest(string plainLeftData, string plainRightData)
+        private ComparisonResponse SetupDifferentDiffTest(string plainLeftData, string plainRightData)
         {
             var response = SetupDiffTest(plainLeftData, plainRightData);
             Assert.IsFalse(response.Equal);
