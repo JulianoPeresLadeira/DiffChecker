@@ -1,4 +1,5 @@
-﻿using DiffChecker.Model;
+﻿using DiffChecker.Domain.Model;
+using DiffChecker.Model;
 
 namespace DiffChecker.Services.Interfaces
 {
@@ -6,8 +7,8 @@ namespace DiffChecker.Services.Interfaces
     {
         ComparisonResponse FindDifference(string id);
 
-        SetDataResponse SetLeft(string id, string data);
+        DiffData SetLeft(string id, string data);
 
-        SetDataResponse SetRight(string id, string data);
+        DiffData SetRight(string id, string data);
     }
 }

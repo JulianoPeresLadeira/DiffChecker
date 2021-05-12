@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>DiffChecker</name>
+        <name>DiffChecker.Api</name>
     </assembly>
     <members>
         <member name="M:DiffChecker.Controllers.v1.DiffController.SetLeft(System.String,DiffChecker.Model.SetDataRequest)">

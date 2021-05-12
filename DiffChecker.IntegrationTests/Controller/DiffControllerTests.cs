@@ -1,16 +1,23 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
+using DiffChecker.DataAccess.Model;
+using DiffChecker.Domain.Model;
 using DiffChecker.IntegrationTests.Util;
 using DiffChecker.Model;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.Configuration;
+using MongoDB.Driver;
 using Newtonsoft.Json;
 using Xunit;
 
 namespace DiffChecker.IntegrationTests.Controller
 {
-    public class DiffControllerTests : IClassFixture<WebApplicationFactory<DiffChecker.Startup>>
+    public class DiffControllerTests : IClassFixture<WebApplicationFactory<DiffChecker.Startup>>, IDisposable
     {
         private readonly HttpClient _client;
+        private readonly WebApplicationFactory<DiffChecker.Startup> _factory;
 
         private readonly string TestId = "10000";
 
@@ -18,9 +25,35 @@ namespace DiffChecker.IntegrationTests.Controller
         private readonly string TestString2_10Chars = "MDEyMzQ1NjQ1Ng==";
         private readonly string TestString_9Chars = "MDEyMzQ1Njc4";
 
-        public DiffControllerTests(WebApplicationFactory<DiffChecker.Startup> fixture)
+        public DiffControllerTests(WebApplicationFactory<DiffChecker.Startup> factory)
         {
-            _client = fixture.CreateClient();
+            var configPath = GetConfigFile();
+
+            _factory = factory.WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureAppConfiguration((context, conf) =>
+                {
+                    conf.AddJsonFile(configPath);
+                });
+            });
+
+            _client = _factory.CreateClient();
+        }
+
+        public void Dispose()
+        {
+            var json = File.ReadAllText(GetConfigFile());
+            dynamic configs = JsonConvert.DeserializeObject(json);
+            var mongoDbConfig = configs[nameof(MongoDbConfiguration)];
+
+            MongoClient client = new MongoClient(mongoDbConfig.ConnectionString.Value);
+            IMongoDatabase database = client.GetDatabase(mongoDbConfig.DatabaseName.Value);
+
+            IMongoCollection<MongoDiffData> leftData = database.GetCollection<MongoDiffData>(mongoDbConfig.LeftDataCollection.Value);
+            IMongoCollection<MongoDiffData> rightData = database.GetCollection<MongoDiffData>(mongoDbConfig.RightDataCollection.Value);
+
+            leftData.DeleteMany(_ => true);
+            rightData.DeleteMany(_ => true);
         }
 
         [Fact]
@@ -73,24 +106,30 @@ namespace DiffChecker.IntegrationTests.Controller
             var rightResponse = await CallSetData(IntegrationTestsHelper.GetSetRightUrl(id), rightData);
 
             Assert.Equal(leftData, leftResponse.Data);
-            Assert.Equal(id, leftResponse.Id);
+            Assert.Equal(id, leftResponse.RequestId);
 
             Assert.Equal(rightData, rightResponse.Data);
-            Assert.Equal(id, rightResponse.Id);
+            Assert.Equal(id, rightResponse.RequestId);
         }
 
-        private async Task<SetDataResponse> CallSetData(string url, string data)
+        private async Task<DiffData> CallSetData(string url, string data)
         {
             var requestBody = IntegrationTestsHelper.BuildSetDataRequest(data);
 
             var response = await _client.PostAsync(url, requestBody);
-            return JsonConvert.DeserializeObject<SetDataResponse>(await response.Content.ReadAsStringAsync());
+            return JsonConvert.DeserializeObject<DiffData>(await response.Content.ReadAsStringAsync());
         }
 
         private async Task<ComparisonResponse> CallDiff(string id)
         {
             var diffResponse = await _client.GetAsync(IntegrationTestsHelper.GetDiffUrl(id));
             return JsonConvert.DeserializeObject<ComparisonResponse>(await diffResponse.Content.ReadAsStringAsync());
+        }
+
+        private string GetConfigFile()
+        {
+            var projectDir = Directory.GetCurrentDirectory();
+            return Path.Combine(projectDir, "appsettings.integration.json");
         }
     }
 }

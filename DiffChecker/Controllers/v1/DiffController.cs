@@ -1,5 +1,6 @@
 ﻿using System.Net;
-using DiffChecker.Errors;
+using DiffChecker.Domain.Error;
+using DiffChecker.Domain.Model;
 using DiffChecker.Model;
 using DiffChecker.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -37,11 +38,11 @@ namespace DiffChecker.Controllers.v1
         /// <response code="400">Missing data, nothing set</response>
         [HttpPost]
         [Route("{id}/left")]
-        [SwaggerResponse((int)HttpStatusCode.OK, "Record Information", typeof(SetDataResponse))]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Record Information", typeof(DiffData))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, "Error Message and Status", Type = typeof(ErrorResponse))]
         public IActionResult SetLeft(string id, [FromBody] SetDataRequest requestBody)
         {
-            var data = requestBody.Data;
+            var data = requestBody?.Data;
 
             if (string.IsNullOrEmpty(data)) throw new InvalidInputException("Missing data field");
 
@@ -66,11 +67,11 @@ namespace DiffChecker.Controllers.v1
         /// <response code="400">Missing data, nothing set</response>
         [HttpPost]
         [Route("{id}/right")]
-        [SwaggerResponse((int)HttpStatusCode.OK, "Record Information", typeof(SetDataResponse))]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Record Information", typeof(DiffData))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, "Error Message and Status", Type = typeof(ErrorResponse))]
         public IActionResult SetRight(string id, [FromBody] SetDataRequest requestBody)
         {
-            var data = requestBody.Data;
+            var data = requestBody?.Data;
 
             if (string.IsNullOrEmpty(data)) throw new InvalidInputException("Missing data field");
 

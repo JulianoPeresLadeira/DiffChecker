@@ -1,7 +1,7 @@
-﻿using DiffChecker.Services.Interfaces;
+﻿using DiffChecker.Domain.Services;
 using NUnit.Framework;
 
-namespace DiffCheckerTests.Services
+namespace DiffChecker.UnitTests.Services
 {
     public abstract class RepositoryTests
     {

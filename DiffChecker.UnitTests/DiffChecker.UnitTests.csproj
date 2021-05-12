@@ -18,6 +18,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\DiffChecker\DiffChecker.csproj" />
+		<ProjectReference Include="..\DiffChecker.Domain\DiffChecker.Domain.csproj" />
+		<ProjectReference Include="..\DiffChecker\DiffChecker.Api.csproj" />
 	</ItemGroup>
 </Project>

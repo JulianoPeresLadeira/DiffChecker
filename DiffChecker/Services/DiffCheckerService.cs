@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using DiffChecker.Errors;
+using DiffChecker.Domain.Error;
+using DiffChecker.Domain.Model;
+using DiffChecker.Domain.Services;
 using DiffChecker.Model;
 using DiffChecker.Services.Interfaces;
 
@@ -19,20 +21,20 @@ namespace DiffChecker.Services
             _decodeService = decodeService;
         }
 
-        public SetDataResponse SetLeft(string id, string data)
+        public DiffData SetLeft(string id, string data)
         {
             return _repository.SetLeft(id, data);
         }
 
-        public SetDataResponse SetRight(string id, string data)
+        public DiffData SetRight(string id, string data)
         {
             return _repository.SetRight(id, data);
         }
 
         public ComparisonResponse FindDifference(string id)
         {
-            var encodedLeft = _repository.GetLeft(id).Data;
-            var encodedRight = _repository.GetRight(id).Data;
+            var encodedLeft = _repository.GetLeft(id)?.Data;
+            var encodedRight = _repository.GetRight(id)?.Data;
 
             if (string.IsNullOrEmpty(encodedLeft)) throw new MissingInputException($"Left content for {id} is not valid");
             if (string.IsNullOrEmpty(encodedRight)) throw new MissingInputException($"Right content for {id} is not valid");

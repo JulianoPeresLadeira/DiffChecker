@@ -1,3 +1,6 @@
+using DiffChecker.DataAccess.Service;
+using DiffChecker.Domain.Model;
+using DiffChecker.Domain.Services;
 using DiffChecker.Middleware;
 using DiffChecker.Middleware.Interfaces;
 using DiffChecker.Services;
@@ -7,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 namespace DiffChecker
@@ -39,13 +43,21 @@ namespace DiffChecker
                         Email = "julianoladeira@gmail.com"
                     },
                 });
-                c.IncludeXmlComments(@"DiffChecker.xml");
+                c.IncludeXmlComments(GetXmlCommentsFile(Configuration));
             });
 
-            services.AddSingleton<IRepository, TemporaryRepository>();
+            // services.AddSingleton<IRepository, TemporaryRepository>();
+            services.AddSingleton<IRepository, MongoRepository>();
             services.AddSingleton<IDecodeService, DecodeService>();
             services.AddScoped<IDiffCheckerService, DiffCheckerService>();
             services.AddTransient<IExceptionHandlerMiddleware, ExceptionHandlerMiddleware>();
+
+            // requires using Microsoft.Extensions.Options
+            services.Configure<MongoDbConfiguration>(
+                Configuration.GetSection(nameof(MongoDbConfiguration)));
+
+            services.AddSingleton<IMongoDbConfiguration>(sp =>
+                sp.GetRequiredService<IOptions<MongoDbConfiguration>>().Value);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -75,6 +87,11 @@ namespace DiffChecker
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private string GetXmlCommentsFile(IConfiguration configuration)
+        {
+            return Configuration.GetSection("SwaggerConfiguration").GetValue<string>("XmlCommentsFile");
         }
     }
 }

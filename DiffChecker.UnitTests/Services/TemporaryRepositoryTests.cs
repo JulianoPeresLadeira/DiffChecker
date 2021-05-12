@@ -1,7 +1,7 @@
-﻿using DiffChecker.Services;
-using DiffChecker.Services.Interfaces;
+﻿using DiffChecker.Domain.Services;
+using DiffChecker.Services;
 
-namespace DiffCheckerTests.Services
+namespace DiffChecker.UnitTests.Services
 {
     public class TemporaryRepositoryTests : RepositoryTests
     {

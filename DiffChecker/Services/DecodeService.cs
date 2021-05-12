@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text;
-using DiffChecker.Errors;
+using DiffChecker.Domain.Error;
 using DiffChecker.Services.Interfaces;
 
 namespace DiffChecker.Services

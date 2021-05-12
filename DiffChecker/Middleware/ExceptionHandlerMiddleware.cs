@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using DiffChecker.Errors;
+using DiffChecker.Domain.Error;
+using DiffChecker.Domain.Model;
 using DiffChecker.Middleware.Interfaces;
-using DiffChecker.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;

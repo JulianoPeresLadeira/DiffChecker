@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DiffChecker.Model
+namespace DiffChecker.Domain.Model
 {
     [Serializable]
     public class ErrorResponse

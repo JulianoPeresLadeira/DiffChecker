@@ -1,6 +1,6 @@
-﻿using DiffChecker.Model;
+﻿using DiffChecker.Domain.Model;
 
-namespace DiffChecker.Errors
+namespace DiffChecker.Domain.Error
 {
     public interface IDiffServiceException
     {

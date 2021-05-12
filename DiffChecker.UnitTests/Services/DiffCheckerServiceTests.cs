@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
+using DiffChecker.Domain.Error;
+using DiffChecker.Domain.Model;
+using DiffChecker.Domain.Services;
 using DiffChecker.Model;
 using DiffChecker.Services;
 using DiffChecker.Services.Interfaces;
 using Moq;
 using NUnit.Framework;
 
-namespace DiffCheckerTests.Services
+namespace DiffChecker.UnitTests.Services
 {
     public class DiffCheckerServiceTests
     {
@@ -162,15 +165,21 @@ namespace DiffCheckerTests.Services
             AssertDecodeServiceWasCalled();
         }
 
+        [Test]
+        public void NoDataSetThrowsError()
+        {
+            Assert.Throws<MissingInputException>(() => _service.FindDifference(TestId));
+        }
+
         private ComparisonResponse SetupDiffTest(string plainLeftData, string plainRightData)
         {
             _repositoryMock
                 .Setup(r => r.GetLeft(It.IsAny<string>()))
-                .Returns(new SetDataResponse { Data = plainLeftData });
+                .Returns(new DiffData { Data = plainLeftData });
 
             _repositoryMock
                 .Setup(r => r.GetRight(It.IsAny<string>()))
-                .Returns(new SetDataResponse { Data = plainRightData });
+                .Returns(new DiffData { Data = plainRightData });
 
             return _service.FindDifference(TestId);
         }
