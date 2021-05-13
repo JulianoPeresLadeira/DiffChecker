@@ -43,7 +43,11 @@ namespace DiffChecker.Api
                         Email = "julianoladeira@gmail.com"
                     },
                 });
-                c.IncludeXmlComments(GetXmlCommentsFile());
+
+                if (GetAddXmlDocumentation())
+                {
+                    c.IncludeXmlComments(GetXmlCommentsFile());
+                }
             });
 
             services.AddSingleton<IRepository, MongoRepository>();
@@ -90,6 +94,11 @@ namespace DiffChecker.Api
         private string GetXmlCommentsFile()
         {
             return Configuration.GetSection("SwaggerConfiguration").GetValue<string>("XmlCommentsFile");
+        }
+
+        private bool GetAddXmlDocumentation()
+        {
+            return Configuration.GetSection("SwaggerConfiguration").GetValue<bool>("AddXmlDocumentation");
         }
     }
 }

@@ -27,12 +27,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="appsettings.integration.json">
+	  <None Update="appsettings.IntegrationTests.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
-
-	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-	  <Exec Command="xcopy /y &quot;$(ProjectDir)$(OutDir)..\..\..\..\DiffChecker.Api\DiffChecker.xml&quot;" />
-	</Target>
 </Project>

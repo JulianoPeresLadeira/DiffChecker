@@ -129,7 +129,7 @@ namespace DiffChecker.IntegrationTests.Controller
         private string GetConfigFile()
         {
             var projectDir = Directory.GetCurrentDirectory();
-            return Path.Combine(projectDir, "appsettings.integration.json");
+            return Path.Combine(projectDir, "appsettings.IntegrationTests.json");
         }
     }
 }
