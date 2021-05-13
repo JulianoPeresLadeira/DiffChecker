@@ -3,6 +3,7 @@ using DiffChecker.Api.Model;
 using DiffChecker.Api.Services.Interfaces;
 using DiffChecker.Domain.Error;
 using DiffChecker.Domain.Model;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
@@ -42,6 +43,7 @@ namespace DiffChecker.Api.Controllers.v1
         /// <response code="200">Data set correctly</response>
         /// <response code="400">Missing data, nothing set</response>
         [HttpPost]
+        [EnableCors("CORSPolicy")]
         [Route("{id}/left")]
         [SwaggerResponse((int)HttpStatusCode.OK, "Record Information", typeof(DiffData))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, "Error Message and Status", Type = typeof(ErrorResponse))]
@@ -72,6 +74,7 @@ namespace DiffChecker.Api.Controllers.v1
         /// <response code="200">Data set correctly</response>
         /// <response code="400">Missing data, nothing set</response>
         [HttpPost]
+        [EnableCors("CORSPolicy")]
         [Route("{id}/right")]
         [SwaggerResponse((int)HttpStatusCode.OK, "Record Information", typeof(DiffData))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, "Error Message and Status", Type = typeof(ErrorResponse))]
@@ -96,6 +99,7 @@ namespace DiffChecker.Api.Controllers.v1
         /// <response code="400">Missing Data for comparison</response>
         /// <response code="500">Error performing comparison, such as error decoding the base64 string</response>
         [HttpGet]
+        [EnableCors("CORSPolicy")]
         [Route("{id}")]
         [SwaggerResponse((int)HttpStatusCode.OK, "Comparison result", typeof(ComparisonResponse))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, "Error Message and Status", Type = typeof(ErrorResponse))]

@@ -60,6 +60,16 @@ namespace DiffChecker.Api
 
             services.AddSingleton<IMongoDbConfiguration>(sp =>
                 sp.GetRequiredService<IOptions<MongoDbConfiguration>>().Value);
+
+            services.AddCors(
+                o => o.AddPolicy("CORSPolicy", builder =>
+                {
+                    builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                })
+            );
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -82,6 +92,8 @@ namespace DiffChecker.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("CORSPolicy");
 
             app.UseAuthorization();
 
