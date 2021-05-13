@@ -5,6 +5,7 @@ using DiffChecker.Api.Services.Interfaces;
 using DiffChecker.Domain.Error;
 using DiffChecker.Domain.Model;
 using DiffChecker.Domain.Services;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
@@ -14,6 +15,7 @@ namespace DiffChecker.UnitTests.Services
     {
         private Mock<IRepository> _repositoryMock;
         private Mock<IDecodeService> _decodeServiceMock;
+        private Mock<ILogger<DiffCheckerService>> _loggerMock;
         private DiffCheckerService _service;
 
         private readonly string TestId = "1";
@@ -27,6 +29,8 @@ namespace DiffChecker.UnitTests.Services
             _decodeServiceMock
                 .Setup(ds => ds.DecodeString(It.IsAny<string>()))
                 .Returns<string>(val => val);
+
+            _loggerMock = new Mock<ILogger<DiffCheckerService>>();
 
             _service = InstantiateService();
         }
@@ -216,7 +220,8 @@ namespace DiffChecker.UnitTests.Services
         {
             return new DiffCheckerService(
                 _repositoryMock.Object,
-                _decodeServiceMock.Object);
+                _decodeServiceMock.Object,
+                _loggerMock.Object);
         }
     }
 }

@@ -11,6 +11,7 @@ namespace DiffChecker.UnitTests.Controllers.v1
     public class DiffControllerTests
     {
         private Mock<IDiffCheckerService> _diffCheckerServiceMock;
+        private Mock<ILogger<DiffController>> _loggerMock;
         private DiffController _controller;
 
         private readonly string TestId = "1";
@@ -20,6 +21,7 @@ namespace DiffChecker.UnitTests.Controllers.v1
         public void SetUp()
         {
             _diffCheckerServiceMock = new Mock<IDiffCheckerService>();
+            _loggerMock = new Mock<ILogger<DiffController>>();
             _controller = InstantiateController();
         }
 
@@ -81,7 +83,7 @@ namespace DiffChecker.UnitTests.Controllers.v1
 
         private DiffController InstantiateController()
         {
-            return new DiffController(_diffCheckerServiceMock.Object);
+            return new DiffController(_diffCheckerServiceMock.Object, _loggerMock.Object);
         }
     }
 }

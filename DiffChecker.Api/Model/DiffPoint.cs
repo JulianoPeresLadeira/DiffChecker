@@ -7,5 +7,10 @@ namespace DiffChecker.Api.Model
     {
         public int Offset { get; set; }
         public int Length { get; set; }
+
+        public override string ToString()
+        {
+            return $"Offset = {Offset}, Length = {Length}";
+        }
     }
 }

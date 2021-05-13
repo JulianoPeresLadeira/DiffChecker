@@ -5,6 +5,7 @@ using DiffChecker.Api.Services.Interfaces;
 using DiffChecker.Domain.Error;
 using DiffChecker.Domain.Model;
 using DiffChecker.Domain.Services;
+using Microsoft.Extensions.Logging;
 
 namespace DiffChecker.Api.Services
 {
@@ -12,13 +13,16 @@ namespace DiffChecker.Api.Services
     {
         private readonly IRepository _repository;
         private readonly IDecodeService _decodeService;
+        private readonly ILogger<DiffCheckerService> _logger;
 
         public DiffCheckerService(
             IRepository repository,
-            IDecodeService decodeService)
+            IDecodeService decodeService,
+            ILogger<DiffCheckerService> logger)
         {
             _repository = repository;
             _decodeService = decodeService;
+            _logger = logger;
         }
 
         public DiffData SetLeft(string id, string data)
@@ -42,8 +46,11 @@ namespace DiffChecker.Api.Services
             var left = DecodeString(encodedLeft);
             var right = DecodeString(encodedRight);
 
+            _logger.LogInformation($"Calculating diff between {left} and {right}");
+
             if (left.Length != right.Length)
             {
+                _logger.LogInformation($"Different lenths");
                 return new ComparisonResponse
                 {
                     DifferentSize = true
@@ -52,6 +59,7 @@ namespace DiffChecker.Api.Services
 
             if (left == right)
             {
+                _logger.LogInformation($"Equal strings");
                 return new ComparisonResponse
                 {
                     Equal = true
@@ -59,6 +67,7 @@ namespace DiffChecker.Api.Services
             }
 
             var diffPoints = FindDifferencePoints(left, right);
+            _logger.LogInformation($"Different strings of same length, running diff check");
             return new ComparisonResponse
             {
                 Equal = false,

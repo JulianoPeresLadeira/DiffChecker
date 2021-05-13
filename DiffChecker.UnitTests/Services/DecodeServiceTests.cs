@@ -1,16 +1,20 @@
 ﻿using DiffChecker.Api.Services;
 using DiffChecker.Domain.Error;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NUnit.Framework;
 
 namespace DiffChecker.UnitTests.Services
 {
     public class DecodeServiceTests
     {
+        private Mock<ILogger<DecodeService>> _loggerMock;
         private DecodeService _service;
 
         [SetUp]
         public void SetUp()
         {
+            _loggerMock = new Mock<ILogger<DecodeService>>();
             _service = InstantiateService();
         }
 
@@ -33,7 +37,7 @@ namespace DiffChecker.UnitTests.Services
 
         private DecodeService InstantiateService()
         {
-            return new DecodeService();
+            return new DecodeService(_loggerMock.Object);
         }
     }
 }

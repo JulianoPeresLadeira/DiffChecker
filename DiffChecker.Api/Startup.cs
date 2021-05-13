@@ -46,13 +46,11 @@ namespace DiffChecker.Api
                 c.IncludeXmlComments(GetXmlCommentsFile());
             });
 
-            // services.AddSingleton<IRepository, TemporaryRepository>();
             services.AddSingleton<IRepository, MongoRepository>();
             services.AddSingleton<IDecodeService, DecodeService>();
             services.AddScoped<IDiffCheckerService, DiffCheckerService>();
             services.AddTransient<IExceptionHandlerMiddleware, ExceptionHandlerMiddleware>();
 
-            // requires using Microsoft.Extensions.Options
             services.Configure<MongoDbConfiguration>(
                 Configuration.GetSection(nameof(MongoDbConfiguration)));
 

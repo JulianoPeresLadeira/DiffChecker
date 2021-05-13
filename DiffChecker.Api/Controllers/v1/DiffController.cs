@@ -4,6 +4,7 @@ using DiffChecker.Api.Services.Interfaces;
 using DiffChecker.Domain.Error;
 using DiffChecker.Domain.Model;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace DiffChecker.Api.Controllers.v1
@@ -13,12 +14,15 @@ namespace DiffChecker.Api.Controllers.v1
     [Produces("application/json")]
     public class DiffController : ControllerBase
     {
-        private IDiffCheckerService _diffCheckerService;
+        private readonly IDiffCheckerService _diffCheckerService;
+        private readonly ILogger<DiffController> _logger;
 
         public DiffController(
-            IDiffCheckerService diffCheckerService)
+            IDiffCheckerService diffCheckerService,
+            ILogger<DiffController> logger)
         {
             _diffCheckerService = diffCheckerService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -43,6 +47,7 @@ namespace DiffChecker.Api.Controllers.v1
         [SwaggerResponse((int)HttpStatusCode.BadRequest, "Error Message and Status", Type = typeof(ErrorResponse))]
         public IActionResult SetLeft(string id, [FromBody] SetDataRequest requestBody)
         {
+            _logger.LogInformation($"Updating left data for id {id}, {requestBody}");
             var data = requestBody?.Data;
 
             if (string.IsNullOrEmpty(data)) throw new InvalidInputException("Missing data field");
@@ -72,6 +77,7 @@ namespace DiffChecker.Api.Controllers.v1
         [SwaggerResponse((int)HttpStatusCode.BadRequest, "Error Message and Status", Type = typeof(ErrorResponse))]
         public IActionResult SetRight(string id, [FromBody] SetDataRequest requestBody)
         {
+            _logger.LogInformation($"Updating right data for id {id}, {requestBody}");
             var data = requestBody?.Data;
 
             if (string.IsNullOrEmpty(data)) throw new InvalidInputException("Missing data field");
@@ -96,6 +102,7 @@ namespace DiffChecker.Api.Controllers.v1
         [SwaggerResponse((int)HttpStatusCode.InternalServerError, "Error Message and Status", Type = typeof(ErrorResponse))]
         public IActionResult FindDiff(string id)
         {
+            _logger.LogInformation($"Calculating diff for id {id}");
             return Ok(_diffCheckerService.FindDifference(id));
         }
     }
